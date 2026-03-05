@@ -1,0 +1,21 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Временные файлы
+*.log
+*.tmp
+*.swp
+*.swo
+*~
+
+# Резервные копии
+*.bak
+*.backup
+
+# Локальные конфиги (если нужно)
+# .env.local
+
+# Скрипты развёртывания (содержат токены)
+deploy-to-github.sh
