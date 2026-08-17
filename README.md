@@ -14,17 +14,17 @@
 
 ## 📁 Файлы
 
-| Файл | Назначение |
-|------|------------|
-| `lib.sh` | Библиотека функций для всех скриптов |
-| `config.env` | Конфигурация (модель, хост, порт) |
-| `install.sh` | Установка Ollama через Homebrew |
-| `download-model.sh` | Загрузка модели с управлением сервисом |
-| `run-chat.sh` | Запуск режима диалога |
-| `run-server.sh` | Запуск сервера (API) |
-| `stop.sh` | Остановка сервера |
-| `uninstall.sh` | Полное удаление Ollama |
-| `status.sh` | Проверка статуса Ollama |
+| Файл (клон) | Команда (brew) | Назначение |
+|------|------|------------|
+| `lib.sh` | — | Библиотека функций для всех скриптов |
+| `config.env` | — | Конфигурация (модель, хост, порт) |
+| `install.sh` | `ollama-install` | Установка Ollama через Homebrew |
+| `download-model.sh` | `ollama-download-model` | Загрузка модели с управлением сервисом |
+| `run-chat.sh` | `ollama-run-chat` | Запуск режима диалога |
+| `run-server.sh` | `ollama-run-server` | Запуск сервера (API) |
+| `stop.sh` | `ollama-stop` | Остановка сервера |
+| `uninstall.sh` | `ollama-uninstall` | Полное удаление Ollama |
+| `status.sh` | `ollama-status` | Проверка статуса Ollama |
 
 ---
 
@@ -51,37 +51,33 @@ ollama-uninstall         # полное удаление Ollama
 
 Конфигурация — в установленном файле `config.env` (см. раздел «Конфигурация»).
 
-> 📌 **Версия из клона репозитория**: скрипты запускаются как `./install.sh`, `./run-chat.sh` и т.д. — без приставки `ollama-`.
-
 > ℹ️ **Подсказки адаптируются автоматически**: вся справка и подсказки внутри скриптов (например, список команд в `status.sh`, хинты «Для запуска…», «Для остановки…») сами показывают правильные имена — `./script.sh` при установке из клона и `ollama-script` при установке через brew.
+
+Далее для каждой команды приведены оба варианта: из клона репозитория (`./script.sh`) и через brew (`ollama-script`).
 
 ### 1. Установка Ollama
 ```bash
-# Из клона репозитория:
-./install.sh
-# Через brew:
-ollama-install
+./install.sh          # или ollama-install, если установлено через brew
 ```
 
 ### 2. Загрузка модели
 ```bash
-./download-model.sh
-# Или другая модель:
-./download-model.sh qwen3:8b
+./download-model.sh                 # или ollama-download-model (brew)
+./download-model.sh qwen3:8b        # или ollama-download-model qwen3:8b
 ```
 
 ### 3. Использование
 ```bash
 # Режим диалога
-./run-chat.sh
+./run-chat.sh                       # или ollama-run-chat (brew)
 
 # Или режим сервера
-./run-server.sh
+./run-server.sh                     # или ollama-run-server (brew)
 ```
 
 ### 4. Проверка статуса
 ```bash
-./status.sh
+./status.sh                         # или ollama-status (brew)
 ```
 
 ---
@@ -93,9 +89,9 @@ ollama-install
 - Устанавливает Ollama через `brew install`
 - Показывает следующие шаги
 
-**Использование:**
+**Использование (клон / brew):**
 ```bash
-./install.sh
+./install.sh          # ollama-install
 ```
 
 ---
@@ -106,11 +102,11 @@ ollama-install
 - Загружает модель
 - Останавливает сервис после загрузки (если запускал его)
 
-**Использование:**
+**Использование (клон / brew):**
 ```bash
-./download-model.sh                    # Модель по умолчанию (qwen3.8:27b-mlx)
-./download-model.sh qwen3:8b           # Конкретная модель
-./download-model.sh llama3.2           # Другая модель
+./download-model.sh                    # ollama-download-model — модель по умолчанию (qwen3.8:27b-mlx)
+./download-model.sh qwen3:8b           # ollama-download-model qwen3:8b — конкретная модель
+./download-model.sh llama3.2           # ollama-download-model llama3.2 — другая модель
 ```
 
 ---
@@ -120,10 +116,10 @@ ollama-install
 - Работает автономно (не требует запущенного сервиса)
 - Если модель не загружена — Ollama предложит загрузить её
 
-**Использование:**
+**Использование (клон / brew):**
 ```bash
-./run-chat.sh                          # Модель по умолчанию
-./run-chat.sh qwen3:8b                 # Конкретная модель
+./run-chat.sh                          # ollama-run-chat — модель по умолчанию
+./run-chat.sh qwen3:8b                 # ollama-run-chat qwen3:8b — конкретная модель
 ```
 
 **В диалоге:**
@@ -137,9 +133,9 @@ ollama-install
 - Проверяет, не запущен ли уже
 - Доступно по HTTP: `http://127.0.0.1:11434`
 
-**Использование:**
+**Использование (клон / brew):**
 ```bash
-./run-server.sh
+./run-server.sh              # ollama-run-server
 ```
 
 **API endpoints:**
@@ -153,9 +149,9 @@ ollama-install
 - Выгружает модели из памяти
 - Останавливает сервис Ollama
 
-**Использование:**
+**Использование (клон / brew):**
 ```bash
-./stop.sh
+./stop.sh              # ollama-stop
 ```
 
 ---
@@ -166,9 +162,9 @@ ollama-install
 - Удаляет Ollama через `brew uninstall`
 - Очищает кэши и конфигурацию
 
-**Использование:**
+**Использование (клон / brew):**
 ```bash
-./uninstall.sh
+./uninstall.sh              # ollama-uninstall
 ```
 
 ⚠️ **Требует подтверждения!**
@@ -184,9 +180,9 @@ ollama-install
 - ⚙️ Конфигурацию (модель, хост, порт)
 - 📌 Доступные команды
 
-**Использование:**
+**Использование (клон / brew):**
 ```bash
-./status.sh
+./status.sh              # ollama-status
 ```
 
 ---
@@ -228,10 +224,10 @@ KEEP_ALIVE="10m"        # Как долго модель остаётся заг
 ### Примеры загрузки:
 
 ```bash
-./download-model.sh qwen3.8:27b-mlx
-./download-model.sh llama3.2
-./download-model.sh mistral
-./download-model.sh codellama
+./download-model.sh qwen3.8:27b-mlx   # или ollama-download-model qwen3.8:27b-mlx
+./download-model.sh llama3.2          # или ollama-download-model llama3.2
+./download-model.sh mistral           # или ollama-download-model mistral
+./download-model.sh codellama         # или ollama-download-model codellama
 ```
 
 ### ✨ MLX-модели для Apple Silicon
@@ -300,35 +296,35 @@ fi
 
 ```bash
 # 1. Установка
-./install.sh
+./install.sh                          # или ollama-install
 
 # 2. Загрузка модели
-./download-model.sh
+./download-model.sh                   # или ollama-download-model
 
 # 3. Проверка статуса
-./status.sh
+./status.sh                           # или ollama-status
 
 # 4. Запуск диалога
-./run-chat.sh
+./run-chat.sh                         # или ollama-run-chat
 
 # 5. Запуск сервера (для API)
-./run-server.sh
+./run-server.sh                       # или ollama-run-server
 
 # 6. Остановка сервера
-./stop.sh
+./stop.sh                             # или ollama-stop
 ```
 
 ### Проверка перед работой
 
 ```bash
 # Быстрая проверка статуса
-./status.sh
+./status.sh                           # или ollama-status
 
 # Если модель не загружена — загрузить
-./download-model.sh llama3.2
+./download-model.sh llama3.2          # или ollama-download-model llama3.2
 
 # Запустить диалог
-./run-chat.sh llama3.2
+./run-chat.sh llama3.2                # или ollama-run-chat llama3.2
 ```
 
 ---
@@ -388,8 +384,8 @@ tests/
 
 При возникновении проблем:
 
-1. Проверьте статус: `./status.sh`
-2. Перезапустите сервис: `./stop.sh` → `./run-server.sh`
+1. Проверьте статус: `./status.sh` (или `ollama-status`)
+2. Перезапустите сервис: `./stop.sh` → `./run-server.sh` (или `ollama-stop` → `ollama-run-server`)
 3. Проверьте логи Ollama: `brew logs ollama`
 
 ---
