@@ -37,22 +37,28 @@ brew tap spinoza0/tap
 brew install spinoza0/tap/ollama-scripts
 ```
 
-После установки все команды доступны из любой директории (без `./`):
+После установки команды доступны из любой директории **без `./`** и с префиксом `ollama-` (чтобы не конфликтовать с одноимёнными командами других пакетов):
 
 ```bash
-install.sh
-download-model.sh
-run-chat.sh
-status.sh
+ollama-install           # установка Ollama
+ollama-download-model    # загрузка модели по умолчанию
+ollama-run-chat          # режим диалога
+ollama-run-server        # запуск сервера API
+ollama-stop              # остановка сервера
+ollama-status            # проверка статуса
+ollama-uninstall         # полное удаление Ollama
 ```
 
 Конфигурация — в установленном файле `config.env` (см. раздел «Конфигурация»).
 
+> 📌 **Версия из клона репозитория**: скрипты запускаются как `./install.sh`, `./run-chat.sh` и т.д. — без приставки `ollama-`.
+
 ### 1. Установка Ollama
 ```bash
+# Из клона репозитория:
 ./install.sh
-# или из PATH:
-install.sh
+# Через brew:
+ollama-install
 ```
 
 ### 2. Загрузка модели
