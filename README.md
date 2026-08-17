@@ -30,9 +30,29 @@
 
 ## 🚀 Быстрый старт
 
+### 0. Установка скриптов (Homebrew tap)
+
+```bash
+brew tap spinoza0/tap
+brew install spinoza0/tap/ollama-scripts
+```
+
+После установки все команды доступны из любой директории (без `./`):
+
+```bash
+install.sh
+download-model.sh
+run-chat.sh
+status.sh
+```
+
+Конфигурация — в установленном файле `config.env` (см. раздел «Конфигурация»).
+
 ### 1. Установка Ollama
 ```bash
 ./install.sh
+# или из PATH:
+install.sh
 ```
 
 ### 2. Загрузка модели
@@ -176,6 +196,8 @@ KEEP_ALIVE="10m"        # Как долго модель остаётся заг
 ```
 
 Для изменения отредактируйте `config.env`.
+
+> 📌 **При установке через Homebrew** файл `config.env` находится в `/opt/homebrew/bin/config.env` (если установка в другую версию Homebrew — путь может отличаться, проверьте командой `which download-model.sh`). После переустановки/обновления формулы изменения могут быть перезаписаны.
 
 ---
 
