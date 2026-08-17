@@ -127,6 +127,33 @@ ollama_rm_all_models() {
 }
 
 # -----------------------------------------------------------------------------
+# Загрузить конфигурацию config.env
+# Порядок поиска:
+#   1. $OLLAMA_SCRIPTS_CONFIG (если задан)
+#   2. config.env рядом со скриптом (локальная установка)
+#   3. /opt/homebrew/etc/ollama-scripts/config.env (установка через brew)
+# -----------------------------------------------------------------------------
+load_config() {
+    local path="${OLLAMA_SCRIPTS_CONFIG:-}"
+    if [ -z "$path" ] || [ ! -f "$path" ]; then
+        if [ -f "$SCRIPT_DIR/config.env" ]; then
+            path="$SCRIPT_DIR/config.env"
+        elif [ -f "/opt/homebrew/etc/ollama-scripts/config.env" ]; then
+            path="/opt/homebrew/etc/ollama-scripts/config.env"
+        fi
+    fi
+
+    if [ -n "$path" ] && [ -f "$path" ]; then
+        # shellcheck disable=SC1090
+        source "$path"
+        return 0
+    fi
+
+    echo "❌ Не найден config.env" >&2
+    return 1
+}
+
+# -----------------------------------------------------------------------------
 # Ширина рамки для вывода заголовков
 # -----------------------------------------------------------------------------
 BOX_WIDTH=59

@@ -7,8 +7,8 @@
 set -e
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-source "$SCRIPT_DIR/config.env"
 source "$SCRIPT_DIR/lib.sh"
+load_config
 
 box_border top
 box_line "Удаление Ollama и всех моделей"

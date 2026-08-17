@@ -145,11 +145,11 @@ else
 fi
 echo ""
 
-# Тест 9: Все скрипты используют config.env
+# Тест 9: Все скрипты используют config.env (через load_config)
 echo "═══ Тест 9: Скрипты используют config.env ═══"
 CONFIG_USERS=0
 for script in install.sh download-model.sh run-chat.sh run-server.sh stop.sh status.sh uninstall.sh; do
-    if grep -q "source.*config.env" "$SCRIPT_DIR/../$script" 2>/dev/null; then
+    if grep -q "load_config" "$SCRIPT_DIR/../$script" 2>/dev/null; then
         ((CONFIG_USERS++))
     fi
 done
