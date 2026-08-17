@@ -7,9 +7,9 @@
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "$SCRIPT_DIR/lib.sh"
 
-echo "╔═══════════════════════════════════════════════════════════╗"
-echo "║                  Установка Ollama                         ║"
-echo "╚═══════════════════════════════════════════════════════════╝"
+box_border top
+box_line "Установка Ollama"
+box_border bottom
 echo ""
 
 # Проверка macOS
@@ -42,9 +42,9 @@ else
 fi
 
 echo ""
-echo "╔═══════════════════════════════════════════════════════════╗"
-echo "║              Ollama установлен!                           ║"
-echo "╚═══════════════════════════════════════════════════════════╝"
+box_border top
+box_line "Ollama установлен!"
+box_border bottom
 echo ""
 echo "📌 Следующий шаг — загрузка модели:"
 echo "   ./download-model.sh"

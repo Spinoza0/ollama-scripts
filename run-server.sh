@@ -8,11 +8,11 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "$SCRIPT_DIR/config.env"
 source "$SCRIPT_DIR/lib.sh"
 
-echo "╔═══════════════════════════════════════════════════════════╗"
-echo "║         Запуск Ollama Server                              ║"
-echo "║         Хост: $HOST                                       ║"
-echo "║         Порт: $PORT                                       ║"
-echo "╚═══════════════════════════════════════════════════════════╝"
+box_border top
+box_line "Запуск Ollama Server"
+box_line "Хост: $HOST"
+box_line "Порт: $PORT"
+box_border bottom
 echo ""
 
 # Проверка установки Ollama
@@ -22,6 +22,16 @@ if ! ollama_is_installed; then
     echo "💡 Сначала выполните установку:"
     echo "   ./install.sh"
     exit 1
+fi
+
+# Применение keep-alive из config.env к сервису
+if ollama_apply_keep_alive "$KEEP_ALIVE"; then
+    SERVICE_STATUS=$(ollama_get_status)
+    if [ "$SERVICE_STATUS" = "started" ] || [ "$SERVICE_STATUS" = "error" ]; then
+        echo "⚙️  keep-alive изменён на $KEEP_ALIVE, перезапускаю сервис..."
+        ollama_stop
+        sleep 1
+    fi
 fi
 
 # Проверка, запущен ли уже

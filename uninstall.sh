@@ -10,9 +10,9 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "$SCRIPT_DIR/config.env"
 source "$SCRIPT_DIR/lib.sh"
 
-echo "╔═══════════════════════════════════════════════════════════╗"
-echo "║         Удаление Ollama и всех моделей                    ║"
-echo "╚═══════════════════════════════════════════════════════════╝"
+box_border top
+box_line "Удаление Ollama и всех моделей"
+box_border bottom
 echo ""
 
 # Проверка macOS
@@ -54,9 +54,9 @@ rm -rf "$HOME/Library/Caches/Ollama"
 rm -rf "$HOME/Library/Logs/Ollama"
 
 echo ""
-echo "╔═══════════════════════════════════════════════════════════╗"
-echo "║              Удаление завершено!                          ║"
-echo "╚═══════════════════════════════════════════════════════════╝"
+box_border top
+box_line "Удаление завершено!"
+box_border bottom
 echo ""
 echo "💡 Для установки: ./install.sh"
 echo ""

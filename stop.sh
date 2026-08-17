@@ -8,9 +8,9 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "$SCRIPT_DIR/config.env"
 source "$SCRIPT_DIR/lib.sh"
 
-echo "╔═══════════════════════════════════════════════════════════╗"
-echo "║         Остановка Ollama Server                           ║"
-echo "╚═══════════════════════════════════════════════════════════╝"
+box_border top
+box_line "Остановка Ollama Server"
+box_border bottom
 echo ""
 
 # Проверка установки Ollama

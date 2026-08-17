@@ -125,3 +125,71 @@ ollama_rm_all_models() {
         done
     fi
 }
+
+# -----------------------------------------------------------------------------
+# Ширина рамки для вывода заголовков
+# -----------------------------------------------------------------------------
+BOX_WIDTH=59
+
+# -----------------------------------------------------------------------------
+# Применить keep-alive к сервису Ollama
+# Используется штатный механизм Homebrew: ~/.homebrew/services/ollama.env
+# Аргументы: $1 - длительность (например, 10m)
+# Возвращает: 0 если изменено, 2 если уже совпадает, 1 при ошибке
+# -----------------------------------------------------------------------------
+ollama_apply_keep_alive() {
+    local keep_alive="$1"
+    local env_file="${HOMEBREW_USER_CONFIG_HOME:-$HOME/.homebrew}/services/ollama.env"
+
+    if [ -z "$keep_alive" ]; then
+        return 1
+    fi
+
+    local current=""
+    if [ -f "$env_file" ]; then
+        current=$(grep '^OLLAMA_KEEP_ALIVE=' "$env_file" 2>/dev/null | tail -1 | cut -d= -f2-)
+    fi
+
+    if [ "$current" = "$keep_alive" ]; then
+        return 2
+    fi
+
+    mkdir -p "$(dirname "$env_file")"
+    if [ -f "$env_file" ]; then
+        grep -v '^OLLAMA_KEEP_ALIVE=' "$env_file" > "$env_file.tmp" 2>/dev/null || true
+        mv "$env_file.tmp" "$env_file"
+    else
+        : > "$env_file"
+    fi
+    echo "OLLAMA_KEEP_ALIVE=$keep_alive" >> "$env_file"
+
+    return 0
+}
+
+# -----------------------------------------------------------------------------
+# Печать горизонтальной границы рамки
+# Аргументы: $1 - углы: top (╔╗) или bottom (╚╝)
+# -----------------------------------------------------------------------------
+box_border() {
+    local left right
+    if [ "$1" = "bottom" ]; then
+        left='╚'; right='╝'
+    else
+        left='╔'; right='╗'
+    fi
+    printf '%s' "$left"
+    printf '═%.0s' $(seq 1 "$BOX_WIDTH")
+    printf '%s\n' "$right"
+}
+
+# -----------------------------------------------------------------------------
+# Печать строки внутри рамки (выравнивание по левому краю)
+# Аргументы: $1 - текст строки
+# -----------------------------------------------------------------------------
+box_line() {
+    local text="$1"
+    local len pad
+    len=$(printf '%s' "$text" | wc -m | tr -d ' ')
+    pad=$((BOX_WIDTH - 2 - len))
+    printf '║ %s%*s ║\n' "$text" "$pad" ""
+}

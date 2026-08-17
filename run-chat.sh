@@ -19,13 +19,39 @@ if ! ollama_is_installed; then
     exit 1
 fi
 
-echo "╔═══════════════════════════════════════════════════════════╗"
-echo "║         Режим диалога с Ollama                            ║"
-echo "║         Модель: $MODEL                                    ║"
-echo "╚═══════════════════════════════════════════════════════════╝"
+box_border top
+box_line "Режим диалога с Ollama"
+box_line "Модель: $MODEL"
+box_border bottom
 echo ""
 echo "💬 Диалог. Для выхода: /bye"
 echo "═══════════════════════════════════════════════════════════"
 echo ""
 
-ollama run "$MODEL"
+# Проверка, был ли сервис запущен до нас
+WAS_RUNNING=false
+if ollama_is_running; then
+    WAS_RUNNING=true
+fi
+
+# Запуск сервиса если не запущен
+if [ "$WAS_RUNNING" = false ]; then
+    echo "⚠️  Сервис не запущен. Временно запускаю..."
+
+    if ! ollama_start_and_wait 10; then
+        echo "❌ Не удалось запустить сервис"
+        exit 1
+    fi
+    echo "✅ Сервис запущен"
+    echo ""
+fi
+
+ollama run "$MODEL" --keepalive "$KEEP_ALIVE"
+
+# Остановка сервиса если мы его запускали
+if [ "$WAS_RUNNING" = false ]; then
+    echo ""
+    echo "🛑 Остановка сервиса (был запущен только для диалога)..."
+    ollama_stop
+    echo "✅ Сервис остановлен"
+fi
