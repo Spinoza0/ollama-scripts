@@ -62,9 +62,19 @@ if [ "$SERVICE_STATUS" = "started" ] || [ "$SERVICE_STATUS" = "error" ]; then
         echo "💡 Для загрузки: $(cmd_name download-model)"
     fi
 else
-    echo "   ⚠️  Сервер не запущен — список моделей недоступен"
-    echo ""
-    echo "💡 Запустите сервер: $(cmd_name run-server)"
+    OFFLINE=$(ollama_list_models_storage)
+    if [ -n "$OFFLINE" ]; then
+        echo "   ℹ️  Сервер не запущен — показываю из хранилища:"
+        echo "$OFFLINE" | while read -r line; do
+            echo "   $line"
+        done
+        echo ""
+        echo "💡 Запустите сервер: $(cmd_name run-server)"
+    else
+        echo "   ℹ️  Нет загруженных моделей"
+        echo ""
+        echo "💡 Для загрузки: $(cmd_name download-model)"
+    fi
 fi
 echo ""
 
