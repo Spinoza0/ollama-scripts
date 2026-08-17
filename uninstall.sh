@@ -58,5 +58,5 @@ box_border top
 box_line "Удаление завершено!"
 box_border bottom
 echo ""
-echo "💡 Для установки: ./install.sh"
+echo "💡 Для установки: $(cmd_name install)"
 echo ""

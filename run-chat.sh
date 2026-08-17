@@ -15,7 +15,7 @@ if ! ollama_is_installed; then
     echo "❌ Ollama не установлен"
     echo ""
     echo "💡 Сначала выполните установку:"
-    echo "   ./install.sh"
+    echo "   $(cmd_name install)"
     exit 1
 fi
 

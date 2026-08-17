@@ -20,7 +20,7 @@ if ollama_is_installed; then
 else
     echo "   ❌ Не установлен"
     echo ""
-    echo "💡 Для установки: ./install.sh"
+    echo "💡 Для установки: $(cmd_name install)"
     exit 1
 fi
 echo ""
@@ -50,15 +50,21 @@ echo ""
 
 # 3. Проверка установленных моделей
 echo "📚 Установленные модели:"
-MODELS=$(ollama_list_models)
-if [ -n "$MODELS" ]; then
-    echo "$MODELS" | while read -r line; do
-        echo "   $line"
-    done
+if [ "$SERVICE_STATUS" = "started" ] || [ "$SERVICE_STATUS" = "error" ]; then
+    MODELS=$(ollama_list_models)
+    if [ -n "$MODELS" ]; then
+        echo "$MODELS" | while read -r line; do
+            echo "   $line"
+        done
+    else
+        echo "   ℹ️  Нет загруженных моделей"
+        echo ""
+        echo "💡 Для загрузки: $(cmd_name download-model)"
+    fi
 else
-    echo "   ℹ️  Нет загруженных моделей"
+    echo "   ⚠️  Сервер не запущен — список моделей недоступен"
     echo ""
-    echo "💡 Для загрузки: ./download-model.sh"
+    echo "💡 Запустите сервер: $(cmd_name run-server)"
 fi
 echo ""
 
@@ -71,10 +77,10 @@ echo ""
 
 # 5. Доступные команды
 echo "📌 Доступные команды:"
-echo "   ./install.sh        - Установить Ollama"
-echo "   ./download-model.sh - Загрузить модель"
-echo "   ./run-chat.sh       - Режим диалога"
-echo "   ./run-server.sh     - Режим сервера"
-echo "   ./stop.sh           - Остановить сервер"
-echo "   ./uninstall.sh      - Удалить Ollama"
+printf "   %-22s - %s\n" "$(cmd_name install)" "Установить Ollama"
+printf "   %-22s - %s\n" "$(cmd_name download-model)" "Загрузить модель"
+printf "   %-22s - %s\n" "$(cmd_name run-chat)" "Режим диалога"
+printf "   %-22s - %s\n" "$(cmd_name run-server)" "Режим сервера"
+printf "   %-22s - %s\n" "$(cmd_name stop)" "Остановить сервер"
+printf "   %-22s - %s\n" "$(cmd_name uninstall)" "Удалить Ollama"
 echo ""

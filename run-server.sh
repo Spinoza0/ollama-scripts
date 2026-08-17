@@ -20,7 +20,7 @@ if ! ollama_is_installed; then
     echo "❌ Ollama не установлен"
     echo ""
     echo "💡 Сначала выполните установку:"
-    echo "   ./install.sh"
+    echo "   $(cmd_name install)"
     exit 1
 fi
 
@@ -51,4 +51,4 @@ fi
 
 echo ""
 echo "✅ Сервер запущен на ${API_URL}"
-echo "📌 Для остановки: ./stop.sh"
+echo "📌 Для остановки: $(cmd_name stop)"
